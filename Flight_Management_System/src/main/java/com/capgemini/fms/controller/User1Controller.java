@@ -100,12 +100,17 @@ public class User1Controller {
 		}
 	}
 	
-	@GetMapping("/getUser1details")
+	@GetMapping("/getUser1details/{userId}")
 	@CrossOrigin(origins="http://localhost:4200")
-	public ResponseEntity<List<User1>> User1details(@Valid @RequestParam Integer userId){
-		List<User1> User1List = user1service.show();
-		return new ResponseEntity<List<User1>>(User1List,HttpStatus.OK);
+	public Optional<User1> User1details(@PathVariable Integer userId) throws User1Exception{
+		try {
+			return user1service.User1details(userId);
 		}
+		catch(Exception ex)
+		{
+			throw new User1Exception(ex.getMessage());
+		}
+	}
 	}
 	
 
